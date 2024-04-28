@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingDucate.api", "ParkingDucate\ParkingDucate.api.csproj", "{144DE114-830D-461E-A79C-179E99D509C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingDucate.api", "ParkingDucate\ParkingDucate.api.csproj", "{144DE114-830D-461E-A79C-179E99D509C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{84DF1E15-25D1-41F3-B195-9C3E9A96FC0C}"
 EndProject
@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Repository", "3 - Repository", "{A8253429-9D24-4E98-8964-A28030D0D1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingDucate.Repository", "ParkingDucate.Repository\ParkingDucate.Repository.csproj", "{CE5F2B43-54F1-42CE-A42D-2BD8E5197644}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingDucate.Repository", "ParkingDucate.Repository\ParkingDucate.Repository.csproj", "{CE5F2B43-54F1-42CE-A42D-2BD8E5197644}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingDucate.IoC", "ParkingDucate.IoC\ParkingDucate.IoC.csproj", "{A24C8434-4810-4856-A45C-6DB7A88A4C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingDucate.IoC", "ParkingDucate.IoC\ParkingDucate.IoC.csproj", "{A24C8434-4810-4856-A45C-6DB7A88A4C24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingDucate.Domain", "ClassLibrary1\ParkingDucate.Domain.csproj", "{C7EA37CD-967A-49A8-BE16-06F35F871399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingDucate.Domain", "ParkingDucate.Domain\ParkingDucate.Domain.csproj", "{52910189-32AA-4B99-8628-02383C24DC10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{A24C8434-4810-4856-A45C-6DB7A88A4C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A24C8434-4810-4856-A45C-6DB7A88A4C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A24C8434-4810-4856-A45C-6DB7A88A4C24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7EA37CD-967A-49A8-BE16-06F35F871399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7EA37CD-967A-49A8-BE16-06F35F871399}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7EA37CD-967A-49A8-BE16-06F35F871399}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7EA37CD-967A-49A8-BE16-06F35F871399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52910189-32AA-4B99-8628-02383C24DC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52910189-32AA-4B99-8628-02383C24DC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52910189-32AA-4B99-8628-02383C24DC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52910189-32AA-4B99-8628-02383C24DC10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,7 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{144DE114-830D-461E-A79C-179E99D509C7} = {84DF1E15-25D1-41F3-B195-9C3E9A96FC0C}
 		{CE5F2B43-54F1-42CE-A42D-2BD8E5197644} = {A8253429-9D24-4E98-8964-A28030D0D1B0}
-		{C7EA37CD-967A-49A8-BE16-06F35F871399} = {D331580A-037C-4E13-A7AB-4287EDAAE298}
+		{52910189-32AA-4B99-8628-02383C24DC10} = {D331580A-037C-4E13-A7AB-4287EDAAE298}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F805BD07-38B3-450A-B70D-28E1B0A8B003}
