@@ -7,5 +7,6 @@ namespace ParkingDucate.Domain.Services.Interfaces
         void AddVehicle(Vehicle vehicle);
         Ticket FinalizeVehicleStay(string plate);
         Vacancies GetVacancies();
+        Vacancies SetNumberOfVacancies(int bike, int car, int van);
     }
 }

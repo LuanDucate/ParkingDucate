@@ -36,5 +36,11 @@ namespace ParkingDucate.Controllers
         {
             return _parkingService.FinalizeVehicleStay(plate);
         }
+
+        [HttpPost(Name = "SetNumberOfVacancies")]
+        public Vacancies SetNumberOfVacancies(int bike, int car, int van)
+        {
+            return _parkingService.SetNumberOfVacancies(bike, car, van);
+        }
     }
 }
