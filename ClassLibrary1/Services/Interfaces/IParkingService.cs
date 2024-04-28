@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ParkingDucate.Domain.Entities;
+﻿using ParkingDucate.Domain.Model;
 
 namespace ParkingDucate.Domain.Services.Interfaces
 {
