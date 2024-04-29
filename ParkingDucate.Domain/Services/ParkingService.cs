@@ -17,7 +17,7 @@ namespace ParkingDucate.Domain.Services
         public void AddVehicle(Vehicle vehicle)
         {
             _repository.AddVehicle(vehicle);
-            _repository.UpdateVacancies(vehicle.Size, ParkingStatus.Started);
+            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Started);
             _repository.AddTicket(new Ticket(vehicle));
         }
 
@@ -27,7 +27,7 @@ namespace ParkingDucate.Domain.Services
             vehicle.Status = ParkingStatus.Finished;
             _repository.UpdateVehicle(vehicle);
 
-            _repository.UpdateVacancies(vehicle.Size, ParkingStatus.Finished);
+            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Finished);
             Ticket ticket = _repository.getTicketByPlate(plate);
             ticket.CalculateStayPrice();
             return ticket;

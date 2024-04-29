@@ -1,4 +1,5 @@
 ﻿using ParkingDucate.Domain.Model;
+using ParkingDucate.Domain.Model.Enums;
 
 namespace ParkingDucate.Domain.Repository.Interfaces
 {
@@ -10,8 +11,7 @@ namespace ParkingDucate.Domain.Repository.Interfaces
         Ticket getTicketByPlate(string plate);
         Vacancies GetVacancies();
         Vehicle GetVehicleByPlate(string plate);
-        void UpdateVacancies(int size, Model.Enums.ParkingStatus finished);
-        void UpdateVacancies(Vacancies v);
+        void UpdateVacancies(VehicleType type, ParkingStatus status);
         void UpdateVehicle(Vehicle vehicle);
     }
 }
