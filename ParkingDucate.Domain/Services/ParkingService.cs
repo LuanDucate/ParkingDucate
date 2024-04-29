@@ -17,7 +17,7 @@ namespace ParkingDucate.Domain.Services
         public void AddVehicle(Vehicle vehicle)
         {
             _repository.AddVehicle(vehicle);
-            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Started);
+            CalculetaVacancies();
             Ticket ticket = new Ticket(vehicle.Plate);
             _repository.AddTicket(ticket);
         }
@@ -46,6 +46,7 @@ namespace ParkingDucate.Domain.Services
                 Plate = "Van1R00",
                 Entry = DateTime.Now.AddHours(-2)
             });
+            CalculetaVacancies();
             return true;
         }
 
@@ -55,11 +56,32 @@ namespace ParkingDucate.Domain.Services
             vehicle.Status = ParkingStatus.Finished;
             _repository.UpdateVehicle(vehicle);
 
-            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Finished);
+            CalculetaVacancies();
             Ticket ticket = _repository.getTicketByPlate(plate);
             ticket.CalculateStayPrice();
             _repository.UpdateTicket(ticket);
             return ticket;
+        }
+
+        private Vacancies CalculetaVacancies()
+        {
+            IEnumerable<Vehicle> vehicles = new List<Vehicle>();
+            vehicles = _repository.GetAllParkedVehicles();
+
+            Vacancies v = _repository.GetVacancies();
+            v.OccupiedByCars = vehicles.Where(x => x.Size.Equals(2) && x.Status == ParkingStatus.Started).Count();
+            v.AvailableCar = v.baseCar - v.OccupiedByCars;
+
+            v.OccupiedByBikes = vehicles.Where(x => x.Size.Equals(1) && x.Status == ParkingStatus.Started).Count();
+            v.AvailableBike = v.baseBike - v.OccupiedByBikes;
+
+            v.OccupiedByVans = vehicles.Where(x => x.Size.Equals(3) && x.Status == ParkingStatus.Started).Count();
+            v.AvailableVan = v.baseVan - v.OccupiedByVans;
+
+            v.TotalAvailable = v.AvailableBike + v.AvailableCar + v.AvailableVan;
+
+            _repository.UpdateVacancies(v);
+            return v;
         }
 
         public IEnumerable<Vehicle> GetParkedVehicles()
@@ -69,29 +91,17 @@ namespace ParkingDucate.Domain.Services
 
         public Vacancies GetVacancies()
         {
-            return _repository.GetVacancies();
+            return CalculetaVacancies();
         }
 
         public Vacancies SetNumberOfVacancies(int bike, int car, int van)
         {
-            IEnumerable<Vehicle> vehicles = new List<Vehicle>();
-            vehicles = _repository.GetAllParkedVehicles();
-
-            Vacancies v = new Vacancies();
-            v.OccupiedByCars = vehicles.Select(x => x.Type.Equals(VehicleType.Car)).Count();
-            v.AvailableCar = car - v.OccupiedByCars;
-
-            v.OccupiedByBikes = vehicles.Select(x => x.Type.Equals(VehicleType.Bike)).Count();
-            v.AvailableBike = bike - v.OccupiedByBikes;
-
-            v.OccupiedByVans = vehicles.Select(x => x.Type.Equals(VehicleType.Van)).Count();
-            v.AvailableVan = van - v.OccupiedByVans;
-
-            int total = bike + (car * 2) + (van * 3);
-            v.TotalAvailable = total - vehicles.Select(x => x.Size).Count();
-
+            var v = _repository.GetVacancies();
+            v.baseBike = bike;
+            v.baseCar = car;
+            v.baseVan = van;
             _repository.UpdateVacancies(v);
-            return v;
+            return CalculetaVacancies();
         }
     }
 }

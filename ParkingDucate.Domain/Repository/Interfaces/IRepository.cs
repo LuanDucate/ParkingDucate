@@ -13,7 +13,6 @@ namespace ParkingDucate.Domain.Repository.Interfaces
         Vacancies GetVacancies();
         Vehicle GetVehicleByPlate(string plate);
         void UpdateTicket(Ticket ticket);
-        void UpdateVacancies(VehicleType type, ParkingStatus status);
         void UpdateVacancies(Vacancies v);
         void UpdateVehicle(Vehicle vehicle);
     }

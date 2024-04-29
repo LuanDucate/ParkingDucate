@@ -46,7 +46,7 @@ namespace ParkingDucate.Domain.Repository
 
         public Vacancies GetVacancies()
         {
-            return _context.Vacancies.First();
+            return _context.Vacancies.FirstOrDefault();
         }
 
         public Vehicle? GetVehicleByPlate(string plate)
@@ -54,30 +54,10 @@ namespace ParkingDucate.Domain.Repository
             return _context.Vehicles.FirstOrDefault(x => x.Plate.Equals(plate) && x.Status.Equals(ParkingStatus.Started));
         }
 
-        public void UpdateVacancies(VehicleType type, ParkingStatus status)
-        {
-            Vacancies v = _context.Vacancies.First();
-            switch (type)
-            {
-                case VehicleType.Car:
-                    v.OccupiedByCars = status == ParkingStatus.Started ? v.OccupiedByCars++ : v.OccupiedByCars--;
-                    v.AvailableCar = status == ParkingStatus.Started ? v.AvailableCar-- : v.AvailableCar++;
-                    break;
-                case VehicleType.Bike:
-                    v.OccupiedByBikes = status == ParkingStatus.Started ? v.OccupiedByBikes++ : v.OccupiedByBikes--;
-                    v.AvailableBike = status == ParkingStatus.Started ? v.AvailableBike-- : v.AvailableBike++;
-                    break;
-                case VehicleType.Van:
-                    v.OccupiedByVans = status == ParkingStatus.Started ? v.OccupiedByVans++ : v.OccupiedByVans--;
-                    v.AvailableVan = status == ParkingStatus.Started ? v.AvailableVan-- : v.AvailableVan++;
-                    break;
-            }
-            v.TotalAvailable = status == ParkingStatus.Started ? v.TotalAvailable-- : v.TotalAvailable++;
-            _context.SaveChanges();
-        }
-
         public void UpdateVacancies(Vacancies vacancies)
         {
+            var v = _context.Vacancies.FirstOrDefault();
+            v = vacancies;
             _context.Vacancies.Update(vacancies);
             _context.SaveChanges();
         }

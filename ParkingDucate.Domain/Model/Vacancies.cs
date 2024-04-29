@@ -3,6 +3,9 @@
     public class Vacancies
     {
         public Guid Id { get; set; }
+        public int baseCar { get; set; }
+        public int baseBike { get; set; }
+        public int baseVan { get; set; }
         public int AvailableCar { get; set; }
         public int AvailableBike { get; set; }
         public int AvailableVan { get; set; }
@@ -15,13 +18,9 @@
         {
             Vacancies v = new Vacancies();
             v.Id = Guid.NewGuid();
-            v.AvailableCar = 10;
-            v.AvailableBike = 10;
-            v.AvailableVan = 10;
-            v.OccupiedByBikes = 1;
-            v.OccupiedByBikes = 1;
-            v.OccupiedByVans = 1;
-            v.TotalAvailable = 27;
+            v.baseCar = 10;
+            v.baseVan = 10;
+            v.baseBike = 10;
             return v;
         }
     }
