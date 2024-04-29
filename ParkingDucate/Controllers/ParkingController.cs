@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using ParkingDucate.Domain.Model;
 using ParkingDucate.Domain.Services.Interfaces;
@@ -8,39 +9,54 @@ namespace ParkingDucate.Controllers
     [Route("[controller]")]
     public class ParkingController : ControllerBase
     {
-        private readonly ILogger<ParkingController> _logger;
         private readonly IParkingService _parkingService;
 
-        public ParkingController(ILogger<ParkingController> logger, IParkingService parkingService)
+        public ParkingController(IParkingService parkingService)
         {
-            _logger = logger;
             _parkingService = parkingService;
         }
 
-        [HttpGet(Name = "GetVacancies")]
+        [HttpGet]
+        [Route("GetVacancies")]
         public Vacancies GetVacancies()
         {
             return _parkingService.GetVacancies();
         }
 
-        [HttpPost(Name = "AddVehicle")]
+        [HttpGet]
+        [Route("GetVehicles")]
+        public IEnumerable<Vehicle> GetVehicles()
+        {
+            return _parkingService.GetParkedVehicles();
+        }
+
+        [HttpPost]
+        [Route("AddVehicle")]
         public Vacancies AddVehicle(Vehicle Vehicle)
         {
             _parkingService.AddVehicle(Vehicle);
-
             return _parkingService.GetVacancies();
         }
 
-        [HttpPost(Name = "FinalizeVehicleStay")]
+        [HttpPost]
+        [Route("FinalizeVehicleStay")]
         public Ticket FinalizeVehicleStay(string plate)
         {
             return _parkingService.FinalizeVehicleStay(plate);
         }
 
-        [HttpPost(Name = "SetNumberOfVacancies")]
+        [HttpPost]
+        [Route("SetNumberOfVacancies")]
         public Vacancies SetNumberOfVacancies(int bike, int car, int van)
         {
             return _parkingService.SetNumberOfVacancies(bike, car, van);
+        }
+
+        [HttpGet]
+        [Route("InitialValues")]
+        public bool InitialValues()
+        {
+            return _parkingService.CreateInitialValues();
         }
     }
 }

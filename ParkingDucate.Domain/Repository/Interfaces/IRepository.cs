@@ -6,12 +6,15 @@ namespace ParkingDucate.Domain.Repository.Interfaces
     public interface IRepository
     {
         void AddTicket(Ticket ticket);
+        void AddVacancies(Vacancies v);
         void AddVehicle(Vehicle vehicle);
-        List<Vehicle> GetAllParkedVehicles();
+        IEnumerable<Vehicle> GetAllParkedVehicles();
         Ticket getTicketByPlate(string plate);
         Vacancies GetVacancies();
         Vehicle GetVehicleByPlate(string plate);
+        void UpdateTicket(Ticket ticket);
         void UpdateVacancies(VehicleType type, ParkingStatus status);
+        void UpdateVacancies(Vacancies v);
         void UpdateVehicle(Vehicle vehicle);
     }
 }

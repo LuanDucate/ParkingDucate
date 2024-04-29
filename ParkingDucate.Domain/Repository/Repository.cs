@@ -17,15 +17,25 @@ namespace ParkingDucate.Domain.Repository
             _context.SaveChanges();
         }
 
+        public void AddVacancies(Vacancies v)
+        {
+            if (!_context.Vacancies.Any())
+            {
+                _context.Vacancies.Add(v);
+                _context.SaveChanges();
+            }
+        }
+
         public void AddVehicle(Vehicle vehicle)
         {
             _context.Vehicles.Add(vehicle);
             _context.SaveChanges();
         }
 
-        public List<Vehicle> GetAllParkedVehicles()
+        public IEnumerable<Vehicle> GetAllParkedVehicles()
         {
-            return _context.Vehicles.Where(x => x.Status.Equals(ParkingStatus.Started)).ToList();
+            var retorno = _context.Vehicles.Where(x => x.Status.Equals(ParkingStatus.Started)).ToList();
+            return retorno.AsEnumerable();
         }
 
         public Ticket? getTicketByPlate(string plate)
@@ -36,7 +46,7 @@ namespace ParkingDucate.Domain.Repository
 
         public Vacancies GetVacancies()
         {
-            return _context.Vacancies.FirstOrDefault();
+            return _context.Vacancies.First();
         }
 
         public Vehicle? GetVehicleByPlate(string plate)
@@ -50,19 +60,19 @@ namespace ParkingDucate.Domain.Repository
             switch (type)
             {
                 case VehicleType.Car:
-                    v.occupiedByCars = status == ParkingStatus.Started ? v.occupiedByCars++ : v.occupiedByCars--;
+                    v.OccupiedByCars = status == ParkingStatus.Started ? v.OccupiedByCars++ : v.OccupiedByCars--;
                     v.AvailableCar = status == ParkingStatus.Started ? v.AvailableCar-- : v.AvailableCar++;
                     break;
                 case VehicleType.Bike:
-                    v.occupiedByBikes = status == ParkingStatus.Started ? v.occupiedByBikes++ : v.occupiedByBikes--;
+                    v.OccupiedByBikes = status == ParkingStatus.Started ? v.OccupiedByBikes++ : v.OccupiedByBikes--;
                     v.AvailableBike = status == ParkingStatus.Started ? v.AvailableBike-- : v.AvailableBike++;
                     break;
                 case VehicleType.Van:
-                    v.occupiedByVans = status == ParkingStatus.Started ? v.occupiedByVans++ : v.occupiedByVans--;
+                    v.OccupiedByVans = status == ParkingStatus.Started ? v.OccupiedByVans++ : v.OccupiedByVans--;
                     v.AvailableVan = status == ParkingStatus.Started ? v.AvailableVan-- : v.AvailableVan++;
                     break;
             }
-            v.TotalAvailable = status == ParkingStatus.Started ? v.TotalAvailable - ((int)type) : v.TotalAvailable + ((int)type);
+            v.TotalAvailable = status == ParkingStatus.Started ? v.TotalAvailable-- : v.TotalAvailable++;
             _context.SaveChanges();
         }
 
@@ -71,10 +81,14 @@ namespace ParkingDucate.Domain.Repository
             _context.Vacancies.Update(vacancies);
             _context.SaveChanges();
         }
-
         public void UpdateVehicle(Vehicle vehicle)
         {
             _context.Vehicles.Update(vehicle);
+            _context.SaveChanges();
+        }
+        public void UpdateTicket(Ticket ticket)
+        {
+            _context.Tickets.Update(ticket);
             _context.SaveChanges();
         }
     }

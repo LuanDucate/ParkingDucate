@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParkingDucate.Domain.Context.Configuration;
 using ParkingDucate.Domain.Model;
 
 namespace ParkingDucate.Domain.Context
@@ -12,5 +13,15 @@ namespace ParkingDucate.Domain.Context
         public Context(DbContextOptions options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new VacanciesConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketConfiguration());
+        }
+
     }
 }
