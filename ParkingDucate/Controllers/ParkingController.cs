@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ParkingDucate.Domain.Entities;
+using ParkingDucate.Domain.Model;
 using ParkingDucate.Domain.Services.Interfaces;
 
 namespace ParkingDucate.Controllers
@@ -35,6 +35,12 @@ namespace ParkingDucate.Controllers
         public Ticket FinalizeVehicleStay(string plate)
         {
             return _parkingService.FinalizeVehicleStay(plate);
+        }
+
+        [HttpPost(Name = "SetNumberOfVacancies")]
+        public Vacancies SetNumberOfVacancies(int bike, int car, int van)
+        {
+            return _parkingService.SetNumberOfVacancies(bike, car, van);
         }
     }
 }

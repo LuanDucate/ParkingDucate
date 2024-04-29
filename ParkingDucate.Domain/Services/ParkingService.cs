@@ -1,27 +1,63 @@
 ﻿using ParkingDucate.Domain.Model;
+using ParkingDucate.Domain.Model.Enums;
+using ParkingDucate.Domain.Repository.Interfaces;
 using ParkingDucate.Domain.Services.Interfaces;
 
 namespace ParkingDucate.Domain.Services
 {
     public class ParkingService : IParkingService
     {
+        private readonly IRepository _repository;
+
+        public ParkingService(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public void AddVehicle(Vehicle vehicle)
         {
-            // Adicionar o objeto de veiculo no banco, criar o ticket
-            throw new NotImplementedException();
+            _repository.AddVehicle(vehicle);
+            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Started);
+            _repository.AddTicket(new Ticket(vehicle));
         }
 
         public Ticket FinalizeVehicleStay(string plate)
         {
-            // Atualizar o objeto na tabela de veiculo  e Ticket e retornar o ticket preenchido
-            throw new NotImplementedException();
+            Vehicle vehicle = _repository.GetVehicleByPlate(plate);
+            vehicle.Status = ParkingStatus.Finished;
+            _repository.UpdateVehicle(vehicle);
+
+            _repository.UpdateVacancies(vehicle.Type, ParkingStatus.Finished);
+            Ticket ticket = _repository.getTicketByPlate(plate);
+            ticket.CalculateStayPrice();
+            return ticket;
         }
 
         public Vacancies GetVacancies()
         {
-            //popular todos os campos to objeto com as informações. 
+            return _repository.GetVacancies();
+        }
 
-            throw new NotImplementedException();
+        public Vacancies SetNumberOfVacancies(int bike, int car, int van)
+        {
+            List<Vehicle> vehicles = new List<Vehicle>();
+            vehicles = _repository.GetAllParkedVehicles();
+
+            Vacancies v = new Vacancies();
+            v.occupiedByCars = vehicles.Select(x => x.Type.Equals(VehicleType.Car)).Count();
+            v.AvailableCar = car - v.occupiedByCars;
+
+            v.occupiedByBikes = vehicles.Select(x => x.Type.Equals(VehicleType.Bike)).Count();
+            v.AvailableBike = bike - v.occupiedByBikes;
+
+            v.occupiedByVans = vehicles.Select(x => x.Type.Equals(VehicleType.Van)).Count();
+            v.AvailableVan = van - v.occupiedByVans;
+
+            int total = bike + (car * 2) + (van * 3);
+            v.TotalAvailable = total - vehicles.Select(x => x.Size).Count();
+
+            _repository.UpdateVacancies(v);
+            return v;
         }
     }
 }
